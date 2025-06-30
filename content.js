@@ -24,6 +24,33 @@ async function checkApiConfiguration() {
     }
 }
 
+// Function to ensure help button state is correct
+function ensureHelpButtonState() {
+    const chatbotExists = document.getElementById('leetcode-ai-chatbot');
+    const helpButton = document.getElementById('leetcode-ai-help-btn');
+    
+    console.log('=== Help Button State Check ===');
+    console.log('Chatbot exists:', !!chatbotExists);
+    console.log('Chatbot window variable:', !!chatbotWindow);
+    console.log('Help button exists:', !!helpButton);
+    
+    if (window.location.pathname.includes('/problems/')) {
+        if (!helpButton) {
+            console.log('Help button missing on problem page, creating it');
+            createHelpButton();
+            return;
+        }
+        
+        if (chatbotExists && chatbotWindow) {
+            console.log('Chatbot is open, ensuring help button is hidden');
+            helpButton.classList.add('hidden');
+        } else {
+            console.log('Chatbot is closed, ensuring help button is visible');
+            helpButton.classList.remove('hidden');
+        }
+    }
+}
+
 // Function to manage help button visibility
 function toggleHelpButton(show = true) {
     const helpButton = document.getElementById('leetcode-ai-help-btn');
@@ -33,6 +60,9 @@ function toggleHelpButton(show = true) {
         } else {
             helpButton.classList.add('hidden');
         }
+        console.log(`Help button ${show ? 'shown' : 'hidden'}`);
+    } else if (!show) {
+        console.log('Help button not found, but trying to hide it');
     }
 }
 
@@ -56,13 +86,19 @@ function createHelpButton() {
         </div>
     `;
     
-    // Hide the button if chatbot is currently open
-    if (chatbotWindow) {
-        toggleHelpButton(false);
-    }
-    
     helpButton.addEventListener('click', handleHelpButtonClick);
     document.body.appendChild(helpButton);
+    
+    // Check if chatbot is currently open and hide button accordingly
+    // We need to check this after the button is added to the DOM
+    const chatbotExists = document.getElementById('leetcode-ai-chatbot');
+    if (chatbotExists && chatbotWindow) {
+        console.log('Chatbot is open, hiding help button');
+        helpButton.classList.add('hidden');
+    } else {
+        console.log('Chatbot is not open, showing help button');
+        helpButton.classList.remove('hidden');
+    }
 }
 
 async function handleHelpButtonClick() {
@@ -575,6 +611,8 @@ function openChatbotWindow(problemData) {
     // Ensure we scroll to bottom after the initial message
     setTimeout(() => {
         scrollToBottom();
+        // Double-check that help button is hidden after chatbot is fully created
+        ensureHelpButtonState();
     }, 100);
 }
 
@@ -1196,10 +1234,7 @@ function toggleChatbot() {
         chatbotWindow.classList.remove('minimized');
         
         // Hide the "Get AI Help" button when expanded
-        const helpButton = document.getElementById('leetcode-ai-help-btn');
-        if (helpButton) {
-            helpButton.style.display = 'none';
-        }
+        toggleHelpButton(false);
         
         // Ensure input container is visible after expanding
         setTimeout(() => {
@@ -1238,7 +1273,14 @@ function closeChatbot() {
             }
             
             // Show the "Get AI Help" button again
+            console.log('Chatbot closed, restoring help button');
             toggleHelpButton(true);
+            
+            // If button doesn't exist, recreate it
+            if (!document.getElementById('leetcode-ai-help-btn')) {
+                console.log('Help button missing after close, recreating it');
+                createHelpButton();
+            }
         }, 300);
     }
 }
@@ -1259,7 +1301,7 @@ function observePageChanges() {
             currentPath = window.location.pathname;
             setTimeout(() => {
                 checkApiConfiguration();
-                createHelpButton();
+                ensureHelpButtonState();
             }, 1000);
         }
     });
@@ -1273,9 +1315,16 @@ function observePageChanges() {
     window.addEventListener('popstate', () => {
         setTimeout(() => {
             checkApiConfiguration();
-            createHelpButton();
+            ensureHelpButtonState();
         }, 1000);
     });
+    
+    // Periodic check to ensure button state is correct (every 3 seconds)
+    setInterval(() => {
+        if (window.location.pathname.includes('/problems/')) {
+            ensureHelpButtonState();
+        }
+    }, 3000);
 }
 
 // Function to clean AI response before formatting
