@@ -1,0 +1,924 @@
+/* Styles for the LeetCode AI Assistant extension */
+
+/* Help Button Styles */
+#leetcode-ai-help-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 10000;
+    cursor: pointer;
+    animation: slideIn 0.3s ease-out;
+}
+
+.ai-help-button {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 25px;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: none;
+    outline: none;
+}
+
+.ai-help-button:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+}
+
+.ai-icon {
+    font-size: 18px;
+}
+
+/* Modal Styles */
+#api-key-prompt-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10001;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+.modal-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background-color 0.2s;
+}
+
+.close-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.modal-body p {
+    margin: 0 0 20px 0;
+    color: #374151;
+    line-height: 1.5;
+}
+
+.setup-steps {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.step {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    padding: 12px;
+    background-color: #f9fafb;
+    border-radius: 8px;
+}
+
+.step-number {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+    margin-right: 12px;
+    flex-shrink: 0;
+}
+
+.modal-footer {
+    padding: 20px;
+    border-top: 1px solid #e5e7eb;
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.open-settings-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.open-settings-btn:hover {
+    transform: translateY(-1px);
+}
+
+.cancel-btn {
+    background: #6b7280;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.cancel-btn:hover {
+    background: #4b5563;
+}
+
+/* Chatbot Styles */
+#leetcode-ai-chatbot {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 10000;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    animation: slideIn 0.3s ease-out;
+    transition: all 0.3s ease;
+}
+
+#leetcode-ai-chatbot.minimized {
+    transform: translateY(0);
+}
+
+#leetcode-ai-chatbot.minimized .chatbot-container {
+    height: 60px;
+    transition: height 0.3s ease;
+}
+
+.chatbot-container {
+    width: 400px;
+    height: 500px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: height 0.3s ease, transform 0.3s ease;
+}
+
+.chatbot-container:hover {
+    transform: translateY(-2px);
+}
+
+.chatbot-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chatbot-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.chatbot-icon {
+    font-size: 18px;
+}
+
+.provider-badge {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.chatbot-controls {
+    display: flex;
+    gap: 5px;
+}
+
+.chatbot-controls button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 5px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background-color 0.2s;
+}
+
+.chatbot-controls button:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.fullscreen-btn {
+    font-size: 16px !important;
+}
+
+/* Fullscreen Mode Styles */
+#leetcode-ai-chatbot.fullscreen {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: 10002 !important;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+    animation: fullscreenFadeIn 0.3s ease-out;
+}
+
+#leetcode-ai-chatbot.fullscreen .chatbot-container {
+    width: 95% !important;
+    height: 95% !important;
+    max-width: 1200px !important;
+    margin: auto !important;
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    box-shadow: 0 30px 100px rgba(0, 0, 0, 0.5) !important;
+    border-radius: 16px !important;
+}
+
+#leetcode-ai-chatbot.fullscreen .chatbot-header {
+    padding: 20px 25px;
+    font-size: 18px;
+}
+
+#leetcode-ai-chatbot.fullscreen .chatbot-title {
+    font-size: 18px;
+}
+
+#leetcode-ai-chatbot.fullscreen .chatbot-controls button {
+    width: 35px;
+    height: 35px;
+    font-size: 20px;
+}
+
+#leetcode-ai-chatbot.fullscreen .messages-container {
+    max-height: calc(100vh - 200px) !important;
+    height: calc(100vh - 200px) !important;
+    padding: 25px;
+}
+
+#leetcode-ai-chatbot.fullscreen .input-container {
+    padding: 20px 25px;
+    border-top: 1px solid #e5e7eb;
+}
+
+#leetcode-ai-chatbot.fullscreen .quick-actions {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 15px;
+}
+
+#leetcode-ai-chatbot.fullscreen .quick-action {
+    padding: 10px 15px;
+    font-size: 13px;
+}
+
+#leetcode-ai-chatbot.fullscreen .input-row textarea {
+    font-size: 15px;
+    padding: 15px;
+    min-height: 80px;
+}
+
+#leetcode-ai-chatbot.fullscreen .input-row button {
+    padding: 15px 25px;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+/* Fullscreen code blocks get more space */
+#leetcode-ai-chatbot.fullscreen .code-block {
+    font-size: 15px !important;
+    line-height: 1.7 !important;
+    padding: 20px !important;
+}
+
+#leetcode-ai-chatbot.fullscreen .code-block-header {
+    padding: 12px 20px;
+}
+
+/* Fullscreen animation */
+@keyframes fullscreenFadeIn {
+    from {
+        opacity: 0;
+        backdrop-filter: blur(0px);
+    }
+    to {
+        opacity: 1;
+        backdrop-filter: blur(10px);
+    }
+}
+
+/* Responsive fullscreen on smaller screens */
+@media (max-width: 768px) {
+    #leetcode-ai-chatbot.fullscreen .chatbot-container {
+        width: 100% !important;
+        height: 100% !important;
+        border-radius: 0 !important;
+    }
+    
+    #leetcode-ai-chatbot.fullscreen .quick-actions {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.chatbot-content {
+    flex: 1;
+    display: flex !important;
+    flex-direction: column;
+    transition: all 0.3s ease;
+    min-height: 0;
+}
+
+.messages-container {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-height: 350px;
+    min-height: 200px;
+}
+
+.message {
+    max-width: 85%;
+    word-wrap: break-word;
+}
+
+.user-message {
+    align-self: flex-end;
+}
+
+.user-message .message-content {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 12px 16px;
+    border-radius: 18px 18px 4px 18px;
+}
+
+.ai-message .message-content {
+    background: #f3f4f6;
+    color: #374151;
+    padding: 12px 16px;
+    border-radius: 18px 18px 18px 4px;
+    line-height: 1.5;
+}
+
+.ai-message.typing .message-content {
+    background: #e5e7eb;
+    font-style: italic;
+    opacity: 0.7;
+}
+
+.ai-message.error .message-content {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.message-content ul {
+    margin: 8px 0;
+    padding-left: 20px;
+}
+
+.message-content li {
+    margin: 4px 0;
+}
+
+.message-content code {
+    background: rgba(0, 0, 0, 0.1);
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: 13px;
+}
+
+.message-content pre {
+    background: #1f2937;
+    color: #f9fafb;
+    padding: 12px;
+    border-radius: 6px;
+    overflow-x: auto;
+    margin: 8px 0;
+}
+
+.message-content pre code {
+    background: none;
+    padding: 0;
+    color: inherit;
+}
+
+.input-container {
+    border-top: 1px solid #e5e7eb;
+    padding: 15px;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    flex-shrink: 0;
+}
+
+.quick-actions {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.quick-action {
+    background: #f3f4f6;
+    border: 1px solid #d1d5db;
+    color: #374151;
+    padding: 8px 12px;
+    border-radius: 15px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+    text-align: center;
+    font-weight: 500;
+}
+
+.quick-action:hover {
+    background: #e5e7eb;
+    border-color: #9ca3af;
+}
+
+.input-row {
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+}
+
+#user-input {
+    flex: 1;
+    border: 1px solid #d1d5db;
+    border-radius: 20px;
+    padding: 10px 15px;
+    font-size: 14px;
+    font-family: inherit;
+    resize: none;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+#user-input:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+#send-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+#send-btn:hover {
+    transform: translateY(-1px);
+}
+
+#send-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Enhanced Code Block Styling with Custom Highlighter */
+.code-block-container {
+    margin: 12px 0;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #2d2d2d;
+    border: 1px solid #404040;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+    position: relative;
+}
+
+.code-block-header {
+    background: linear-gradient(90deg, #1e1e1e 0%, #2d2d2d 100%);
+    padding: 10px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #404040;
+}
+
+.code-header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.code-language {
+    background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 6px rgba(76, 175, 80, 0.3);
+}
+
+.code-label {
+    color: #ccc;
+    font-size: 13px;
+    font-weight: 600;
+    opacity: 0.9;
+}
+
+.copy-code-btn {
+    background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%);
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 2px 6px rgba(33, 150, 243, 0.3);
+}
+
+.copy-code-btn:hover {
+    background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(33, 150, 243, 0.4);
+}
+
+/* Custom highlighter code block styling */
+.code-block {
+    background: #2d2d2d !important;
+    color: #d4d4d4 !important;
+    font-family: 'SF Mono', 'Monaco', 'Consolas', monospace !important;
+    font-size: 13px !important;
+    line-height: 1.4 !important;
+    padding: 12px 0 !important;
+    margin: 0 !important;
+    overflow-x: auto;
+    border: none !important;
+    tab-size: 4;
+    position: relative;
+    max-height: 400px;
+    display: block;
+}
+
+/* Custom scrollbar for code blocks */
+.code-block::-webkit-scrollbar {
+    height: 8px;
+    width: 8px;
+}
+
+.code-block::-webkit-scrollbar-track {
+    background: #2d2d2d;
+}
+
+.code-block::-webkit-scrollbar-thumb {
+    background: #555;
+    border-radius: 4px;
+}
+
+.code-block::-webkit-scrollbar-thumb:hover {
+    background: #777;
+}
+
+/* Clean inline code styling */
+.inline-code {
+    background: #6e768166 !important;
+    color: #f0f6fc !important;
+    padding: 2px 6px !important;
+    border-radius: 4px !important;
+    font-family: 'SF Mono', 'Monaco', 'Consolas', monospace !important;
+    font-size: 13px !important;
+    border: none !important;
+}
+
+/* Code diff styling for before/after comparisons */
+.code-diff {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 12px 0;
+}
+
+.code-diff-before,
+.code-diff-after {
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.code-diff-before .code-block-header {
+    background: #4d1f1f;
+    color: #ff6b6b;
+}
+
+.code-diff-after .code-block-header {
+    background: #1f4d1f;
+    color: #51cf66;
+}
+
+.code-diff-before .code-block {
+    background: #2d1b1b !important;
+}
+
+.code-diff-after .code-block {
+    background: #1b2d1b !important;
+}
+
+/* Enhanced message styling for code responses */
+.ai-message .message-content {
+    line-height: 1.6;
+}
+
+.ai-message h4 {
+    color: #667eea;
+    margin: 16px 0 8px 0;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.ai-message ul {
+    margin: 8px 0;
+    padding-left: 20px;
+}
+
+.ai-message li {
+    margin: 4px 0;
+}
+
+/* Complexity analysis styling */
+.complexity-analysis {
+    background: #f8f9fa;
+    border-left: 4px solid #667eea;
+    padding: 12px 16px;
+    margin: 12px 0;
+    border-radius: 0 8px 8px 0;
+}
+
+.complexity-analysis h5 {
+    margin: 0 0 8px 0;
+    color: #495057;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.complexity-analysis p {
+    margin: 4px 0;
+    font-size: 13px;
+    color: #6c757d;
+}
+
+/* Algorithm explanation styling */
+.algorithm-explanation {
+    background: #f0f7ff;
+    border: 1px solid #b3d9ff;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 12px 0;
+}
+
+.algorithm-explanation h4 {
+    color: #0366d6;
+    margin: 0 0 12px 0;
+    font-size: 16px;
+}
+
+.algorithm-explanation ol {
+    margin: 8px 0;
+    padding-left: 24px;
+}
+
+.algorithm-explanation li {
+    margin: 6px 0;
+    line-height: 1.5;
+}
+
+/* Code annotations */
+.code-annotation {
+    background: #fff3cd;
+    border: 1px solid #ffeaa7;
+    border-radius: 6px;
+    padding: 8px 12px;
+    margin: 8px 0;
+    font-size: 13px;
+    color: #856404;
+}
+
+/* Performance tips */
+.performance-tip {
+    background: #e8f5e8;
+    border-left: 4px solid #28a745;
+    padding: 12px 16px;
+    margin: 12px 0;
+    border-radius: 0 6px 6px 0;
+}
+
+.performance-tip strong {
+    color: #155724;
+}
+
+/* Animations */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes slideOut {
+    from {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+    }
+}
+
+.chatbot-closing {
+    animation: slideOut 0.3s ease-in forwards;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .chatbot-container {
+        width: 350px;
+        height: 450px;
+    }
+    
+    #leetcode-ai-help-btn {
+        bottom: 15px;
+        right: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .chatbot-container {
+        width: 320px;
+        height: 400px;
+    }
+    
+    .ai-help-button {
+        padding: 10px 16px;
+        font-size: 13px;
+    }
+    
+    .quick-actions {
+        flex-direction: column;
+    }
+    
+    .quick-action {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* Scrollbar styling */
+.messages-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+.messages-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.messages-container::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 3px;
+}
+
+.messages-container::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+/* Keyboard shortcuts hint */
+.keyboard-shortcuts {
+    background: #f0f7ff;
+    border: 1px solid #b3d9ff;
+    border-radius: 6px;
+    padding: 8px 12px;
+    margin: 12px 0;
+    text-align: center;
+}
+
+.keyboard-shortcuts small {
+    color: #0366d6;
+    font-size: 12px;
+}
+
+/* Ensure code blocks display properly in chatbot messages */
+.message-content .code-block-container {
+    display: block !important;
+    visibility: visible !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 8px 0 !important;
+    clear: both;
+    position: relative;
+}
+
+.message-content .code-block {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+.message-content .code-line {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: 100% !important;
+}
+
+.ai-message .code-block-container {
+    background: #0d1117 !important;
+    border: 1px solid #30363d !important;
+}

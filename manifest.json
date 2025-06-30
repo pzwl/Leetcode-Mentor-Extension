@@ -1,0 +1,28 @@
+{
+  "manifest_version": 3,
+  "name": "LeetCode AI Assistant",
+  "version": "1.2.0",
+  "description": "AI-powered chatbot assistant for LeetCode problems with support for ChatGPT, Claude, and Gemini",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://leetcode.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://leetcode.com/problems/*"],
+      "js": ["prism/custom-highlighter.js", "content.js"],
+      "css": ["prism/syntax-theme.css", "styles.css"]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "LeetCode AI Assistant"
+  }
+}

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        body {
+            width: 350px;
+            padding: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2563eb;
+            margin-bottom: 5px;
+        }
+        
+        .subtitle {
+            color: #6b7280;
+            font-size: 14px;
+        }
+        
+        .api-section {
+            margin-bottom: 20px;
+        }
+        
+        .api-provider {
+            margin-bottom: 15px;
+            padding: 15px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+        }
+        
+        .api-provider.active {
+            border-color: #2563eb;
+            background-color: #eff6ff;
+        }
+        
+        .provider-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .provider-name {
+            font-weight: 600;
+            margin-left: 8px;
+            flex: 1;
+        }
+        
+        .status {
+            font-size: 12px;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-weight: 500;
+        }
+        
+        .status.connected {
+            background-color: #dcfce7;
+            color: #166534;
+        }
+        
+        .status.disconnected {
+            background-color: #fee2e2;
+            color: #dc2626;
+        }
+        
+        .api-input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+        
+        .api-input:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+        
+        .save-btn {
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            margin-right: 8px;
+        }
+        
+        .save-btn:hover {
+            background-color: #1d4ed8;
+        }
+        
+        .test-btn {
+            background-color: #10b981;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        
+        .test-btn:hover {
+            background-color: #059669;
+        }
+        
+        .clear-btn {
+            background-color: #ef4444;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        
+        .clear-btn:hover {
+            background-color: #dc2626;
+        }
+        
+        .instructions {
+            background-color: #f9fafb;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        
+        .instructions h3 {
+            margin: 0 0 10px 0;
+            font-size: 14px;
+            color: #374151;
+        }
+        
+        .instructions ul {
+            margin: 0;
+            padding-left: 20px;
+            font-size: 12px;
+            color: #6b7280;
+        }
+        
+        .instructions li {
+            margin-bottom: 5px;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #2563eb;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">🤖 LeetCode AI</div>
+        <div class="subtitle">Configure your AI assistants</div>
+    </div>
+    
+    <div class="api-section">
+        <div class="api-provider" id="openai-provider">
+            <div class="provider-header">
+                <input type="radio" name="provider" value="openai" id="openai-radio">
+                <label for="openai-radio" class="provider-name">OpenAI (ChatGPT)</label>
+                <span class="status disconnected" id="openai-status">Not configured</span>
+            </div>
+            <input type="password" class="api-input" id="openai-key" placeholder="Enter your OpenAI API key (sk-...)">
+            <button class="save-btn">Save</button>
+            <button class="test-btn">Test</button>
+            <button class="clear-btn">Clear</button>
+        </div>
+        
+        <div class="api-provider" id="claude-provider">
+            <div class="provider-header">
+                <input type="radio" name="provider" value="claude" id="claude-radio">
+                <label for="claude-radio" class="provider-name">Anthropic (Claude)</label>
+                <span class="status disconnected" id="claude-status">Not configured</span>
+            </div>
+            <input type="password" class="api-input" id="claude-key" placeholder="Enter your Anthropic API key">
+            <button class="save-btn">Save</button>
+            <button class="test-btn">Test</button>
+            <button class="clear-btn">Clear</button>
+        </div>
+        
+        <div class="api-provider" id="gemini-provider">
+            <div class="provider-header">
+                <input type="radio" name="provider" value="gemini" id="gemini-radio">
+                <label for="gemini-radio" class="provider-name">Google (Gemini)</label>
+                <span class="status disconnected" id="gemini-status">Not configured</span>
+            </div>
+            <input type="password" class="api-input" id="gemini-key" placeholder="Enter your Google AI API key">
+            <button class="save-btn">Save</button>
+            <button class="test-btn">Test</button>
+            <button class="clear-btn">Clear</button>
+        </div>
+    </div>
+    
+    <div class="instructions">
+        <h3>How to get API keys:</h3>
+        <ul>
+            <li><strong>OpenAI:</strong> Visit platform.openai.com → API keys</li>
+            <li><strong>Claude:</strong> Visit console.anthropic.com → API keys</li>
+            <li><strong>Gemini:</strong> Visit aistudio.google.com → Get API key</li>
+        </ul>
+    </div>
+    
+    <script src="popup.js"></script>
+</body>
+</html>
