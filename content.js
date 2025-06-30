@@ -24,6 +24,18 @@ async function checkApiConfiguration() {
     }
 }
 
+// Function to manage help button visibility
+function toggleHelpButton(show = true) {
+    const helpButton = document.getElementById('leetcode-ai-help-btn');
+    if (helpButton) {
+        if (show) {
+            helpButton.classList.remove('hidden');
+        } else {
+            helpButton.classList.add('hidden');
+        }
+    }
+}
+
 function createHelpButton() {
     // Remove existing button if any
     const existingButton = document.getElementById('leetcode-ai-help-btn');
@@ -43,6 +55,11 @@ function createHelpButton() {
             <span class="ai-text">Get AI Help</span>
         </div>
     `;
+    
+    // Hide the button if chatbot is currently open
+    if (chatbotWindow) {
+        toggleHelpButton(false);
+    }
     
     helpButton.addEventListener('click', handleHelpButtonClick);
     document.body.appendChild(helpButton);
@@ -482,10 +499,7 @@ function openChatbotWindow(problemData) {
     }
     
     // Hide the "Get AI Help" button
-    const helpButton = document.getElementById('leetcode-ai-help-btn');
-    if (helpButton) {
-        helpButton.style.display = 'none';
-    }
+    toggleHelpButton(false);
     
     chatbotWindow = document.createElement('div');
     chatbotWindow.id = 'leetcode-ai-chatbot';
@@ -1203,10 +1217,7 @@ function toggleChatbot() {
         chatbotWindow.classList.add('minimized');
         
         // Show the "Get AI Help" button when minimized
-        const helpButton = document.getElementById('leetcode-ai-help-btn');
-        if (helpButton) {
-            helpButton.style.display = 'block';
-        }
+        toggleHelpButton(true);
     }
 }
 
@@ -1227,10 +1238,7 @@ function closeChatbot() {
             }
             
             // Show the "Get AI Help" button again
-            const helpButton = document.getElementById('leetcode-ai-help-btn');
-            if (helpButton) {
-                helpButton.style.display = 'block';
-            }
+            toggleHelpButton(true);
         }, 300);
     }
 }
